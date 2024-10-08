@@ -21,6 +21,12 @@ class EmployeeManager {
     return res.rows;
   }
 
+  async getEmployeeById(employeeId: number) {
+    const res = await pool.query('SELECT * FROM employees WHERE id = $1', [employeeId]);
+    return res.rows;
+  }
+
+  // Function to get all employees by manager
   async getEmployeesByManager(managerId: number) {
     const res = await pool.query('SELECT * FROM employees WHERE manager_id = $1', [managerId]);
     return res.rows;
@@ -97,15 +103,6 @@ class EmployeeManager {
     }
   }
 
-  // Function to update an employee's role
-  // async updateDepartment(employeeId: number, newRoleId: number) {
-  //   const res = await pool.query('UPDATE employee SET role_id = $1 WHERE id = $2 RETURNING *', [
-  //     newRoleId,
-  //     employeeId,
-  //   ]);
-  //   return res.rows[0];
-  // }
-
   // Function to delete a department
   async deleteDepartment(departmentId: number) {
     const res = await pool.query('DELETE FROM departments WHERE id = $1 RETURNING *', [departmentId]);
@@ -130,17 +127,6 @@ class EmployeeManager {
     );
     return res.rows[0];
   }
-
-  // // Function to update an employee's role
-  // async updateRole(employeeId: number, newRoleId: number) {
-  //   const res = await pool.query('UPDATE employee SET role_id = $1 WHERE id = $2 RETURNING *', [
-  //     newRoleId,
-  //     employeeId,
-  //   ]);
-  //   return res.rows[0];
-  // }
-
-  // Function to delete an employee
   // Function to delete a role
   async deleteRole(roleId: number) {
     const res = await pool.query('DELETE FROM roles WHERE id = $1 RETURNING *', [roleId]);
